@@ -1,0 +1,6 @@
+﻿services:
+  chatapp:
+    image: chatapp
+    build:
+      context: .
+      dockerfile: ChatApp/Dockerfile
