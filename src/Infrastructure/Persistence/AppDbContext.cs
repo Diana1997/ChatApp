@@ -1,11 +1,11 @@
 ﻿using Application.Interfaces;
 using Domain;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Infrastructure.Persistence
 {
+    //todo add unique index 
     public class AppDbContext  : IAppDbContext
     {
         private readonly IMongoDatabase _database;
