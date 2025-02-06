@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application._Common.Interfaces;
 using Application._Common.Models;
@@ -10,7 +8,6 @@ using Application.Users.Queries.Login;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using WebApi.Infrastructure;
 
 namespace WebApi.Controllers
@@ -49,7 +46,7 @@ namespace WebApi.Controllers
             var sessionId = await Mediator.Send(query);
                   
             await _eventLogger.LogEvent(
-                new EventLogModel(ActionType.UserRegistered, query.Nickname));
+                new EventLogModel(ActionType.UserLogin, query.Nickname));
             
             return Ok(sessionId);
         }

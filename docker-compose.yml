@@ -1,23 +1,22 @@
 ﻿version: '3.8'
 
 services:
-  # Web API service for the chat server
   webapi:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: chat_webapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - MONGO_CONNECTION_STRING=mongodb://root:example@mongo:27017 
     ports:
       - "5000:80"  
+      - "5001:443"
     depends_on:
       - mongo  
     volumes:
       - ./logs:/app/logs  
 
-  # MongoDB service
   mongo:
     image: mongo:4.4
     container_name: chat_mongo

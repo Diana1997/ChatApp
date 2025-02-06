@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Application._Common.Interfaces;
-using Domain;
+﻿using Application._Common.Interfaces;
 using MongoDB.Driver;
 
 namespace Application._Common.Services

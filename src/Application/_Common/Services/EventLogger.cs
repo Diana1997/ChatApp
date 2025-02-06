@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application._Common.Interfaces;
 using Application._Common.Models;
 using Domain;

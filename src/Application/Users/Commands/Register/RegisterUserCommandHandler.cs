@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Application._Common.Interfaces;
 using Domain;
 using MediatR;
-using MongoDB.Bson;
 
 namespace Application.Users.Commands.Register
 {

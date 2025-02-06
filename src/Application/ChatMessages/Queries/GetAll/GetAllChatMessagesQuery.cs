@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MediatR;
-using MongoDB.Bson;
 
 namespace Application.ChatMessages.Queries.GetAll
 {
