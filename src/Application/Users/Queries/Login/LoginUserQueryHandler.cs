@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Application._Common.Interfaces;
 using Domain;
 using MediatR;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Application.Users.Queries.Login
 {
-    public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, Guid>
+    public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, string>
     {
         private readonly IAppDbContext _context;
 
@@ -17,7 +18,7 @@ namespace Application.Users.Queries.Login
             _context = context;
         }
 
-        public  async Task<Guid> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+        public async Task<string> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _context.Users
                 .Find(u => u.Nickname == request.Nickname)
@@ -25,28 +26,48 @@ namespace Application.Users.Queries.Login
 
             if (user == null)
             {
-                // Handle user not found (throw an exception or return a specific result)
                 throw new UnauthorizedAccessException("User not found.");
             }
-
-            // Generate a new session ID
-            Guid sessionId = Guid.NewGuid();
-
-            // Create a new user session
             
+            string sessionId = await CreateOrUpdateUserSession(user.Id, cancellationToken);
+
+            return sessionId;
+        }
+
+        private async Task<string> CreateOrUpdateUserSession(ObjectId userId,
+            CancellationToken cancellationToken)
+        {
+            var existingSession = await _context.UserSessions
+                .Find(session => session.UserId == userId && session.IsActive)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (existingSession != null)
+            {
+                existingSession.SessionId = Guid.NewGuid().ToString();
+                ;
+                existingSession.StartTime = DateTime.UtcNow;
+                existingSession.IsActive = true;
+
+                await _context.UserSessions.ReplaceOneAsync(
+                    session => session.Id == existingSession.Id,
+                    existingSession,
+                    cancellationToken: cancellationToken);
+
+
+                return existingSession.SessionId;
+            }
+
             var userSession = new UserSession
             {
-                SessionId = sessionId,
+                SessionId = Guid.NewGuid().ToString(),
                 StartTime = DateTime.UtcNow,
                 IsActive = true,
-                UserId = user.Id // Assuming ObjectId is the type for user Id in MongoDB
+                UserId = userId
             };
 
-            // Insert the user session into the database
             await _context.UserSessions.InsertOneAsync(userSession, cancellationToken: cancellationToken);
 
-            // Return the session ID
-            return sessionId;
+            return userSession.SessionId;
         }
     }
 }

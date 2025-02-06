@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
-using Application.Interfaces;
+using Application._Common.Interfaces;
 using MediatR;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -21,13 +20,8 @@ namespace Application.ChatMessages.Queries.GetAll
 
         public async Task<IList<ChatMessageDto>> Handle(GetAllChatMessagesQuery request, CancellationToken cancellationToken)
         {
-            if (!ObjectId.TryParse(request.RoomId, out ObjectId parsedRoomId))
-            {
-                throw new BadRequestException("Invalid Room ID format."); 
-            }
-            
             var messages = await _context.ChatMessages
-                .Find(msg => msg.RoomId ==parsedRoomId)
+                .Find(msg => msg.RoomId == request.RoomId)
                 .ToListAsync(cancellationToken);
 
             var messageDtos = messages.ConvertAll(msg => new ChatMessageDto

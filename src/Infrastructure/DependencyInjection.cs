@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application._Common.Interfaces;
 using Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

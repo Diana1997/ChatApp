@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Application.Exceptions
+namespace Application._Common.Exceptions
 {
     public class BadRequestException : Exception
     {

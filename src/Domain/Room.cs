@@ -2,6 +2,6 @@
 {
     public class Room : BaseEntity
     {
-        public string Name { get; set; }
+        public string Number { get; set; }
     }
 }

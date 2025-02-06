@@ -15,7 +15,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Rooms\Commands\" />
+      <Folder Include="ChatMessages\Commands\" />
     </ItemGroup>
 
 </Project>

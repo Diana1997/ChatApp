@@ -1,7 +1,7 @@
 ﻿using Domain;
 using MongoDB.Driver;
 
-namespace Application.Interfaces
+namespace Application._Common.Interfaces
 {
     public interface IAppDbContext
     {
@@ -9,6 +9,6 @@ namespace Application.Interfaces
         IMongoCollection<UserSession> UserSessions { get; }
         IMongoCollection<Room> Rooms { get; }
         IMongoCollection<ChatMessage> ChatMessages { get; }
-        
+        IMongoCollection<EventLog> EventLogs { get; }
     }
 }

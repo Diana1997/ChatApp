@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Application._Common.Interfaces;
 using MediatR;
 using MongoDB.Driver;
 
@@ -24,7 +24,6 @@ namespace Application.Rooms.Queries.GetAllRooms
             var roomDtos = rooms.ConvertAll(room => new RoomDto
             {
                 Id = room.Id.ToString(),
-                Name = room.Name
             });
 
             return roomDtos;

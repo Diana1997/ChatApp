@@ -1,9 +1,9 @@
-﻿using Application.Interfaces;
-using MediatR;
+﻿using MediatR;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application._Common.Interfaces;
 
 namespace Application.Users.Queries.GetAllUsers
 {
